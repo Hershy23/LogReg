@@ -1,60 +1,89 @@
+/* Global Styling */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #8e44ad, #3498db);
+    color: #fff;
     text-align: center;
-    background: linear-gradient(to right, #ff9966, #ff5e62);
-    padding: 40px;
-    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
+/* Main Container */
 .container {
-    width: 60%;
-    margin: auto;
-    background: white;
-    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 30px;
     border-radius: 12px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-    color: black;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    transition: transform 0.3s;
 }
 
+.container:hover {
+    transform: scale(1.02);
+}
+
+/* Heading */
 h2 {
-    color: #333;
+    font-size: 26px;
+    margin-bottom: 10px;
 }
 
-input {
+/* Description */
+p {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* File Input */
+input[type="file"] {
+    width: 100%;
     padding: 10px;
-    margin: 10px;
-    border: 2px solid #ff5e62;
+    border: none;
+    background: white;
     border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
 }
 
+/* Upload Button */
 button {
-    background: #ff5e62;
+    background: #2ecc71;
     color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
     font-size: 16px;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: 0.3s;
+    width: 100%;
+    transition: background 0.3s;
 }
 
 button:hover {
-    background: #e04c56;
+    background: #27ae60;
 }
 
+/* Loading Animation */
 #loading {
-    margin-top: 20px;
+    margin-top: 15px;
+    font-size: 18px;
+    color: #f1c40f;
     font-weight: bold;
-    display: none;
-    color: #ff5e62;
 }
 
+/* Hidden Class */
 .hidden {
     display: none;
 }
 
+/* Result Styling */
 #result {
-    margin-top: 20px;
+    margin-top: 15px;
     font-size: 18px;
     font-weight: bold;
+    color: #fff;
 }
