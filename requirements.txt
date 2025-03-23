@@ -1,5 +1,7 @@
-Flask
-gunicorn
+flask
+pandas
 numpy
 scikit-learn
-joblib
+matplotlib
+ucimlrepo
+gunicorn
