@@ -1,40 +1,27 @@
 import pickle
-import numpy as np
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template, jsonify
 
-with open("logistic_model_none.pkl", "rb") as file:
-    model_none = pickle.load(file)
 
-with open("logistic_model_l2.pkl", "rb") as file:
-    model_l2 = pickle.load(file)
+with open('logistic_model_l2.pkl', 'rb') as model_file:
+    model = pickle.load(model_file)
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template('index.html')
 
-@app.route("/predict", methods=["POST"])
+@app.route('/predict', methods=['POST'])
 def predict():
     try:
-        data = request.json["features"] 
-        input_data = np.array(data).reshape(1, -1)
+        input_features = [float(x) for x in request.form['features'].split(',')]
+        if len(input_features) != 54:
+            return jsonify({'error': 'Please enter exactly 54 comma-separated values.'})
 
-        pred_none = model_none.predict(input_data)[0]
-        pred_l2 = model_l2.predict(input_data)[0]
-        prob_none = model_none.predict_proba(input_data)[0][1]
-        prob_l2 = model_l2.predict_proba(input_data)[0][1]
-
-        response = {
-            "No Regularization Prediction": "Spam" if pred_none == 1 else "Not Spam",
-            "No Regularization Probability": f"{prob_none:.4f}",
-            "L2 Regularization Prediction": "Spam" if pred_l2 == 1 else "Not Spam",
-            "L2 Regularization Probability": f"{prob_l2:.4f}"
-        }
-        return jsonify(response)
-
+        prediction = model.predict([input_features])[0]
+        return jsonify({'prediction': 'Spam' if prediction == 1 else 'Not Spam'})
     except Exception as e:
-        return jsonify({"error": str(e)})
+        return jsonify({'error': f'Invalid input: {str(e)}'})
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
