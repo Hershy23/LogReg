@@ -1,7 +1,9 @@
 import pickle
+import numpy as np
+import pandas as pd
 from flask import Flask, request, render_template, jsonify
 
-
+# Load the trained logistic regression model
 with open('logistic_model_l2.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
 
@@ -14,14 +16,29 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        input_features = [float(x) for x in request.form['features'].split(',')]
-        if len(input_features) != 54:
-            return jsonify({'error': 'Please enter exactly 54 comma-separated values.'})
+        # Check if a file was uploaded
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file uploaded'})
 
-        prediction = model.predict([input_features])[0]
-        return jsonify({'prediction': 'Spam' if prediction == 1 else 'Not Spam'})
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({'error': 'No selected file'})
+
+        # Read the file into a DataFrame
+        df = pd.read_csv(file, header=None)
+
+        # Ensure 54 columns exist
+        if df.shape[1] != 54:
+            return jsonify({'error': 'Uploaded file must contain exactly 54 columns'})
+
+        # Convert DataFrame to numpy array and predict
+        predictions = model.predict(df.values)
+        results = ['Spam' if pred == 1 else 'Not Spam' for pred in predictions]
+
+        return jsonify({'predictions': results})
+
     except Exception as e:
-        return jsonify({'error': f'Invalid input: {str(e)}'})
+        return jsonify({'error': f'Error processing file: {str(e)}'})
 
 if __name__ == '__main__':
     app.run(debug=True)

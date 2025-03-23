@@ -8,21 +8,33 @@
 </head>
 <body>
     <div class="container">
-        <h2>Spam Email Classifier</h2>
-        <p>Enter 54 comma-separated values to classify as Spam or Not Spam.</p>
+        <h2>📧 Spam Email Classifier</h2>
+        <p>Upload a CSV file with 54 feature columns to detect Spam.</p>
 
-        <form id="predictionForm">
-            <textarea id="features" name="features" placeholder="Enter 54 comma-separated values..." required></textarea>
-            <button type="submit">Predict</button>
+        <form id="uploadForm">
+            <input type="file" id="fileInput" name="file" accept=".csv">
+            <button type="submit">📤 Upload & Predict</button>
         </form>
 
+        <div id="loading" class="hidden">🔄 Processing...</div>
         <div id="result"></div>
     </div>
 
     <script>
-        document.getElementById("predictionForm").onsubmit = async function(e) {
+        document.getElementById("uploadForm").onsubmit = async function(e) {
             e.preventDefault();
-            let formData = new FormData(this);
+            let fileInput = document.getElementById("fileInput").files[0];
+
+            if (!fileInput) {
+                alert("Please upload a CSV file!");
+                return;
+            }
+
+            let formData = new FormData();
+            formData.append("file", fileInput);
+
+            document.getElementById("loading").classList.remove("hidden");
+            document.getElementById("result").innerHTML = "";
 
             let response = await fetch("/predict", {
                 method: "POST",
@@ -30,8 +42,14 @@
             });
 
             let result = await response.json();
-            document.getElementById("result").innerHTML = result.prediction ? "Prediction: " + result.prediction : "Error: " + result.error;
-            document.getElementById("result").style.display = "block";
+            document.getElementById("loading").classList.add("hidden");
+
+            if (result.error) {
+                document.getElementById("result").innerHTML = "❌ Error: " + result.error;
+            } else {
+                document.getElementById("result").innerHTML = 
+                    "<b>Predictions:</b> <br>" + result.predictions.join("<br>");
+            }
         };
     </script>
 </body>
