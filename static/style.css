@@ -1,89 +1,77 @@
-/* Global Styling */
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to right, #8e44ad, #3498db);
-    color: #fff;
+    background-color: #f5f7fa;
     text-align: center;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
 
-/* Main Container */
 .container {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-    width: 400px;
-    transition: transform 0.3s;
+    max-width: 500px;
+    background: #ffffff;
+    padding: 20px;
+    margin: 50px auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
-.container:hover {
-    transform: scale(1.02);
+h1 {
+    color: #333;
+    font-size: 24px;
 }
 
-/* Heading */
-h2 {
-    font-size: 26px;
-    margin-bottom: 10px;
-}
-
-/* Description */
 p {
-    font-size: 14px;
-    margin-bottom: 20px;
+    color: #555;
+    font-size: 16px;
 }
 
-/* File Input */
 input[type="file"] {
-    width: 100%;
+    margin-top: 10px;
     padding: 10px;
-    border: none;
-    background: white;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 10px;
-    cursor: pointer;
+    display: block;
+    width: 100%;
 }
 
-/* Upload Button */
 button {
-    background: #2ecc71;
+    background: #007bff;
     color: white;
     font-size: 16px;
     border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
+    padding: 10px 15px;
     cursor: pointer;
-    width: 100%;
-    transition: background 0.3s;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: 0.3s;
 }
 
 button:hover {
-    background: #27ae60;
+    background: #0056b3;
 }
 
-/* Loading Animation */
 #loading {
-    margin-top: 15px;
-    font-size: 18px;
-    color: #f1c40f;
+    font-size: 16px;
+    color: #ff9800;
+    margin-top: 10px;
     font-weight: bold;
 }
 
-/* Hidden Class */
 .hidden {
     display: none;
 }
 
-/* Result Styling */
+#error {
+    color: red;
+    font-weight: bold;
+}
+
 #result {
     margin-top: 15px;
     font-size: 18px;
+    color: #333;
     font-weight: bold;
-    color: #fff;
 }
